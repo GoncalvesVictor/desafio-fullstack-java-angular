@@ -39,10 +39,10 @@ export class CadastroPaisesComponent implements OnInit {
 
 	salvar(){
 		if (this.validarRegistro()){
-			if (this.idPais === null){
-				this.enviarPost()
+			if (this.idPais == null || this.idPais == ""){
+				this.enviarPost();
 			} else {
-				this.enviarPut()
+				this.enviarPut();
 			}
 		} else {
 			this.poNotification.error("Preencha todos os campos antes de salvar as alterações!")

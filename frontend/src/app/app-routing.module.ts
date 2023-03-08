@@ -43,7 +43,6 @@ const routes: Routes = [
       },
       {
         path: 'cadastro',
-        pathMatch: 'full',
         children:[
           {
             path: '',
@@ -78,10 +77,7 @@ const routes: Routes = [
       }
     ]
   },
-  {
-    path: "**",
-    redirectTo: "pais"
-  }
+
 ];
 
 @NgModule({
