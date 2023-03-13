@@ -11,8 +11,9 @@ import { HttpService } from '../service/http-service.service';
 export class PontosTuristicosComponent implements OnInit {
 	lsActions: Array<PoTableAction> = this.carregarActions();
 	lsColumns: Array<PoTableColumn> = this.carregarColunas();
+	lsBotoes: Array<PoTableColumn> = this.acessoComentarios();
 	lsPontosTuristicos: Array<PontoTuristico> = [];
-
+	
 	constructor(
 		private httpService: HttpService,
 		private poNotification: PoNotificationService,
@@ -34,6 +35,11 @@ export class PontosTuristicosComponent implements OnInit {
 				label: 'Excluir',
 				icon: 'po-icon-delete',
 				action: (row: PontoTuristico)=>{ this.deletarCadastro(row.id) }
+			},
+			{
+				label: 'Comentários',
+				icon: 'po-icon-chat',
+				action: (row: PontoTuristico)=>{ this.navegarParaDetalhesPT(row.id) }
 			}
 		]
 	}
@@ -52,8 +58,10 @@ export class PontosTuristicosComponent implements OnInit {
 
 	navegarParaCadastroPT(codigoPontoTuristico: string = ""){
 		this.router.navigate(['cadastro', codigoPontoTuristico], { relativeTo: this.activatedRoute });
-		console.log(this.router.navigate(['cadastro', codigoPontoTuristico], { relativeTo: this.activatedRoute }));
-		
+	}
+
+	navegarParaDetalhesPT(codigoPontoTuristico: string = ""){
+		this.router.navigate([codigoPontoTuristico, 'comentario' ], { relativeTo: this.activatedRoute });
 	}
 
   carregarPontosTuristicos(){
@@ -74,11 +82,15 @@ export class PontosTuristicosComponent implements OnInit {
 
 				this.lsPontosTuristicos = [...registros]
 			}
-		})
+	})
   }
 
   carregarColunas(): Array<PoTableColumn>{
 		return [
+			{
+				property: 'nome',
+				label: 'Nome do Ponto Turistico',
+			},
 			{
 				property: 'pais',
 				label: 'País'
@@ -87,28 +99,25 @@ export class PontosTuristicosComponent implements OnInit {
 				property: 'cidade',
 				label: 'Cidade',
 			},
-			{
-				property: 'nome',
-				label: 'Nome',
-			},
-      {
+      		{
 				property: 'estacao',
-				label: 'Estação',
+				label: 'Estação do Ano',
 			},
 			{
 				property: 'descricao',
-				label: 'Descrição'
+				label: 'Breve Descrição'
 			}
 		]
 	}
 
-  public listaEstacoes = [
-    {nome:"Primavera"},
-    {nome:"Verão"},
-    {nome:"Outono"},
-    {nome:"Inverno"},
-    {nome:"Todas"}
-  ]
+	acessoComentarios(): Array<PoTableColumn>{
+		return [
+			{
+				label: 'Comentários',
+				action: (row: PontoTuristico)=>{ this.navegarParaDetalhesPT(row.id) }
+			}
+		]
+	}
 }
 
 interface PontoTuristico{

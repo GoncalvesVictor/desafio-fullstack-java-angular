@@ -13,8 +13,8 @@ export class AppComponent {
   constructor(private router: Router){}
 
   readonly menus: Array<PoMenuItem> = [
-    { label: 'Paises', shortLabel: 'Paises', icon: 'po-icon-folder', action: this.onClick.bind(this, '/pais') },
-    { label: 'Pontos Turisticos', shortLabel: 'P. Turisticos', icon: 'po-icon-finance-secure', action: this.onClick.bind(this, '/ponto-turistico') }
+    { label: 'Paises', shortLabel: 'Paises', icon: 'po-icon-pin', action: this.onClick.bind(this, '/pais') },
+    { label: 'Pontos Turisticos', shortLabel: 'P. Turisticos', icon: 'po-icon-picture', action: this.onClick.bind(this, '/ponto-turistico') }
   ];
 
   private onClick(rota: string) {

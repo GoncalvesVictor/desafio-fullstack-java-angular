@@ -3,6 +3,11 @@
 	<form [formGroup]="formPontoTuristico">
 		<po-input 
 			class="po-sm-4 po-md-4 po-lg-3 po-xl-2"
+			formControlName="nome"
+			p-label="Nome do Ponto Turístico">
+		</po-input>
+		<po-input 
+			class="po-sm-4 po-md-4 po-lg-3 po-xl-2"
 			formControlName="pais"
 			p-label="País">
 		</po-input>
@@ -11,20 +16,17 @@
 			formControlName="cidade"            
 			p-label="Cidade">
 		</po-input>
-        <po-input 
-			class="po-sm-4 po-md-4 po-lg-3 po-xl-2"
-			formControlName="nome"
-			p-label="Nome">
-		</po-input>
-		<po-input 
+		<po-combo 
 			class="po-sm-4 po-md-4 po-lg-3 po-xl-1"
-			formControlName="estacao"
-			p-label="Estação">
-		</po-input>
+			name="combo"
+			formControlName="estacao"   
+			p-label="Estações do Ano" 
+			[p-options]="[{ value: 'Todas' }, { value: 'Primavera' }, { value: 'Verão' }, { value: 'Outono' }, { value: 'Inverno' }]"> 
+		</po-combo>
 		<po-input 
 			class="po-sm-12 po-md-12 po-lg-5 po-xl-5"
 			formControlName="descricao"
-			p-label="Descrição">
+			p-label="Breve Descrição">
 		</po-input>
 	</form>
 	

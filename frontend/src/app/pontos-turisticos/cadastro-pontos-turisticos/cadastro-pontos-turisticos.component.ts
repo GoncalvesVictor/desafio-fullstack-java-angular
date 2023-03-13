@@ -11,15 +11,16 @@ import { triggerFormValidators } from 'src/app/shared/util';
   styleUrls: ['./cadastro-pontos-turisticos.component.css']
 })
 export class CadastroPontosTuristicosComponent implements OnInit {
-  idPontoTuristico: string;
-  formPontoTuristico: FormGroup;
-  title: string = "Novo Cadastro de Ponto Turístico"
+	lsPaises: Array<Pais> = [];
+  	idPontoTuristico: string;
+  	formPontoTuristico: FormGroup;
+  	title: string = "Novo Cadastro de Ponto Turístico"
   constructor(
     private formBuilder: FormBuilder,
-		private poNotification: PoNotificationService,
-		private route: ActivatedRoute,
-		private router: Router,
-		private http: HttpService
+	private poNotification: PoNotificationService,
+	private route: ActivatedRoute,
+	private router: Router,
+	private http: HttpService
   ) { 
     this.formPontoTuristico = this.formBuilder.group({
       pais: ['', Validators.compose([Validators.required])],
@@ -36,7 +37,31 @@ export class CadastroPontosTuristicosComponent implements OnInit {
 			this.buscaDadosPontoTuristico()
 			this.title = "Alteração do Ponto Turístico"
 		}
+		;
+		
+		console.log(this.lsPaises);
+		
   }
+
+  carregarPaises(){
+	 this.http.get('pais/').subscribe({
+		next: (resposta)=>{
+			let registros: Array<Pais> = []
+			resposta.forEach(item => {
+				let novoPais: Pais = {
+					id: item.id,
+					nome: item.nome,
+					sigla: item.sigla,
+					continente: item.continente,
+					codigoDdi: item.ddi
+				}
+				registros.push(novoPais);
+			});
+
+			return this.lsPaises = registros;
+		}
+	})
+}
 
   salvar(){
 		if (this.validarRegistro()){
@@ -86,8 +111,8 @@ export class CadastroPontosTuristicosComponent implements OnInit {
 		this.http.get('ponto-turistico/' + this.idPontoTuristico).subscribe({
 			next: (resposta)=>{
 				this.formPontoTuristico.patchValue({
-          pais: resposta.pais,
-          cidade: resposta.cidade,
+          			pais: resposta.pais,
+          			cidade: resposta.cidade,
 					nome: resposta.nome,
 					estacao: resposta.estacao,
 					descricao: resposta.descricao
@@ -98,4 +123,12 @@ export class CadastroPontosTuristicosComponent implements OnInit {
 			}
 		})
 	}
+}
+
+interface Pais{
+	id: string,
+	nome: string,
+	sigla: string,
+	continente: string,
+	codigoDdi: number
 }
